@@ -1,13 +1,13 @@
-FROM stackbrew/ubuntu:14.04
+FROM apemberton/jenkins-enterprise
 MAINTAINER Tracy Kennedy
-#based on aespinosa/jenkins
 
-RUN apt-get update && apt-get clean
-RUN apt-get install -q -y openjdk-7-jre-headless && apt-get clean
-ADD http://nectar-downloads.cloudbees.com/nectar/war/1.554.10.1/jenkins.war /opt/jenkins.war
-RUN chmod 644 /opt/jenkins.war
-ENV JENKINS_HOME /jenkins
+USER root
+RUN apt-get update
+RUN apt-get -y install git
 
-ENTRYPOINT ["java", "-jar", "/opt/jenkins.war"]
-EXPOSE 8888 22 443 7777 8080 9999
-CMD [""]
+USER jenkins
+EXPOSE 8080 22
+ENV JENKINS_HOME /var/lib/jenkins
+
+ENTRYPOINT ["java", "-jar", "jenkins.war", "--httpPort=8080"]
+CMD ["--prefix=/jenkins"]

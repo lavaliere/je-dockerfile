@@ -1,10 +1,6 @@
 FROM lavaliere/jenkins-base
-MAINTAINER Tracy Kennedy
 
-USER root
-RUN apt-get update && apt-get -y upgrade
-RUN apt-get -y install git vim
-RUN printf "AddressFamily inet" >> /etc/ssh/ssh_config 
+MAINTAINER Tracy Kennedy
 
 # Download jenkins.war
 USER jenkins
